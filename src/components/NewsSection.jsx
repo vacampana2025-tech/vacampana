@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import { supabase } from '../supabase';
+import { supabase } from '../../supabase';
 
 function NewsSection() {
   const { section } = useParams();
@@ -11,7 +11,8 @@ function NewsSection() {
       const { data, error } = await supabase
         .from('noticias')
         .select('*')
-        .eq('seccion', section)
+        .eq('category', section)
+        .order('created_at', { ascending: false })
         .limit(12);
       if (error) {
         console.error('Error al cargar noticias:', error);
@@ -70,4 +71,3 @@ function NewsSection() {
 }
 
 export default NewsSection;
-
