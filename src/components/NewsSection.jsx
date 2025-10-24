@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import { supabase } from '../../supabase';
+import { supabase } from '../supabase';
 
 function NewsSection() {
   const { section } = useParams();
@@ -8,17 +8,21 @@ function NewsSection() {
 
   useEffect(() => {
     async function fetchNoticias() {
-      const { data, error } = await supabase
-        .from('noticias')
-        .select('*')
-        .eq('category', section)
-        .order('created_at', { ascending: false })
-        .limit(12);
-      if (error) {
-        console.error('Error al cargar noticias:', error);
-        return;
+      try {
+        const { data, error } = await supabase
+          .from('noticias')
+          .select('*')
+          .eq('seccion', section)
+          .order('created_at', { ascending: false })
+          .limit(12);
+        if (error) {
+          console.error('Error al cargar noticias:', error);
+          return;
+        }
+        setNoticias(data || []);
+      } catch (err) {
+        console.error('Error en la consulta:', err);
       }
-      setNoticias(data);
     }
     fetchNoticias();
   }, [section]);
@@ -71,3 +75,4 @@ function NewsSection() {
 }
 
 export default NewsSection;
+

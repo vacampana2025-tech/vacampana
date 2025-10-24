@@ -7,20 +7,27 @@ function Home() {
 
   useEffect(() => {
     async function fetchNoticias() {
-      const { data, error } = await supabase.from('noticias').select('*').limit(12);
-      if (error) {
-        console.error('Error al cargar noticias:', error);
-        return;
+      try {
+        const { data, error } = await supabase
+          .from('noticias')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(12);
+        if (error) {
+          console.error('Error al cargar noticias:', error);
+          return;
+        }
+        setNoticias(data || []);
+      } catch (err) {
+        console.error('Error en la consulta:', err);
       }
-      setNoticias(data);
     }
     fetchNoticias();
   }, []);
 
   return (
     <div className="container mt-5">
-      <h1>VACampana - Voz Adolescente Campana</h1>
-      <h2 className="mb-4">Últimas Noticias</h2>
+      <h2>Últimas Noticias</h2>
       <div className="row">
         {noticias.length === 0 ? (
           <p>No hay noticias disponibles.</p>

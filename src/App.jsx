@@ -15,7 +15,6 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Verificar sesión inicial
     async function checkSession() {
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
@@ -29,7 +28,6 @@ function App() {
     }
     checkSession();
 
-    // Escuchar cambios en la autenticación
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth event:', event, 'Session:', session?.user?.email || 'null');
       setUser(session?.user || null);
@@ -148,3 +146,4 @@ function App() {
 }
 
 export default App;
+
