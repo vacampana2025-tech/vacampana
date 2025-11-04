@@ -9,7 +9,6 @@ import SearchResults from './components/SearchResults';
 import SearchBar from './components/SearchBar';
 import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PrivacyPolicy from './components/PrivacyPolicy';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -100,11 +99,6 @@ function App() {
                   Internacionales
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/privacy">
-                  Política de Privacidad
-                </NavLink>
-              </li>
               {!user && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/login">
@@ -139,7 +133,6 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/buscar" element={<SearchResults />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
     </Router>
   );
